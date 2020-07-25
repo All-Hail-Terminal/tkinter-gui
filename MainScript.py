@@ -74,10 +74,14 @@ def settings_click():
             width_slider.destroy()
             b_save_settings.destroy()
             b_click_here.destroy()
+            lb_height.destroy()
+            lb_width.destroy()
+            lb_click_here.destroy()
             change_background_color = change_background_color_click
             if change_background_color == change_background_color_click:
                 color_chooser = colorchooser.askcolor(title='select color')
                 win.configure(background=color_chooser[1])
+
 
         # SETTINGS BUTTONS
         b_save_settings = Button(win, text='Save Settings', command=save_settings_click)
