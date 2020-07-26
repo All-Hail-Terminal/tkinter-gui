@@ -1,117 +1,163 @@
 from tkinter import *
 from tkinter import colorchooser
+from pygame import mixer
 
 win = Tk()
+win['background'] = '#A3E4D7'
+mixer.init()
+music = mixer.music.load('Ransom.mp3')
 
-Label(win, bg="grey").pack()
-win.wm_attributes('-transparentcolor', 'grey')
+
+musiccount = 0
+onetimeuse = 0
+mixer.init()
+
+
+def music_player():
+    global musiccount
+    global onetimeuse
+    if onetimeuse == 0:
+        mixer.music.play(-1)
+        onetimeuse = 1
+        musiccount = 1
+    else:
+        if musiccount == 0:
+            mixer.music.unpause()
+            musiccount = musiccount + 1
+        else:
+            mixer.music.pause()
+            musiccount = 0
 
 
 def start_click():
-    start = start_click
-    if start == start_click:
-        b_start.destroy()
-        b_settings.destroy()
-        b_quit.destroy()
+    b_start.destroy()
+    b_settings.destroy()
+    b_quit.destroy()
 
-        def buttons_click():
-            b_button_1 = Button(win, text='Button 1')
-            b_button_1.place(x=150, y=200)
+    def buttons_click():
+        b_button_1 = Button(win, text='Button 1')
+        b_button_1.place(x=150, y=200)
 
-        # Buttons GUI
-        b_buttons = Button(win, text='Buttons', command=buttons_click)
-        b_buttons.place(x=150, y=150)
+    # Buttons GUI
+    b_buttons = Button(win, text='Buttons', command=buttons_click)
+    b_buttons.place(x=150, y=150)
 
 
 def settings_click():
-    global COLORS
-    settings = settings_click
-    if settings == settings_click:
-        b_start.destroy()
-        b_settings.destroy()
-        b_quit.destroy()
+    b_start.destroy()
+    b_settings.destroy()
+    b_quit.destroy()
 
-        def save_settings_click():
-            save_settings = save_settings_click
-            if save_settings == save_settings_click:
-                height_value = str(height_slider.get())
-                width_value = str(width_slider.get())
-                total = height_value + 'x' + width_value
-                win.geometry(total)
+    def save_settings_click():
+        height_value = str(height_slider.get())
+        width_value = str(width_slider.get())
+        total = height_value + 'x' + width_value
+        win.geometry(total)
 
-        def click_here_click():
-            click_here = click_here_click
-            if click_here == click_here_click:
-                b_save_settings.destroy()
-                lb_color.destroy()
-                height_slider.destroy()
-                width_slider.destroy()
-                b_save_settings.destroy()
+    def click_here_click():
+        b_save_settings.destroy()
+        lb_color.destroy()
+        height_slider.destroy()
+        width_slider.destroy()
+        b_save_settings.destroy()
 
-                def click_here_save_settings_click():
-                    click_here_save_settings = click_here_save_settings_click
-                    if click_here_save_settings == click_here_save_settings_click:
-                        height_entry_get = str(height_entry.get())
-                        width_entry_get = str(width_entry.get())
-                        win_geometry = height_entry_get + 'x' + width_entry_get
-                        win.geometry(win_geometry)
+        def click_here_save_settings_click():
+            height_entry_get = str(height_entry.get())
+            width_entry_get = str(width_entry.get())
+            win_geometry = height_entry_get + 'x' + width_entry_get
+            win.geometry(win_geometry)
 
-                # CLICK HERE ENTRIES
-                height_entry = Entry(win)
-                height_entry.place(x=210, y=150)
+        # CLICK HERE ENTRIES
+        height_entry = Entry(win)
+        height_entry.place(x=210, y=150)
 
-                width_entry = Entry(win)
-                width_entry.place(x=350, y=150)
+        width_entry = Entry(win)
+        width_entry.place(x=350, y=150)
 
-                # CLICK HERE BUTTONS
-                b_click_here_save_settings = Button(win, text='Save Settings', command=click_here_save_settings_click)
-                b_click_here_save_settings.place(x=310, y=250)
+        # CLICK HERE BUTTONS
+        b_click_here_save_settings = Button(win, text='Save Settings', command=click_here_save_settings_click)
+        b_click_here_save_settings.place(x=310, y=250)
 
-        def change_background_color_click():
-            b_save_settings.destroy()
-            lb_color.destroy()
-            height_slider.destroy()
-            width_slider.destroy()
-            b_save_settings.destroy()
-            b_click_here.destroy()
-            lb_height.destroy()
-            lb_width.destroy()
-            lb_click_here.destroy()
-            change_background_color = change_background_color_click
-            if change_background_color == change_background_color_click:
-                color_chooser = colorchooser.askcolor(title='select color')
-                win.configure(background=color_chooser[1])
+    def change_background_color_click():
+        b_save_settings.destroy()
+        lb_color.destroy()
+        height_slider.destroy()
+        width_slider.destroy()
+        b_save_settings.destroy()
+        b_click_here.destroy()
+        lb_height.destroy()
+        lb_width.destroy()
+        lb_click_here.destroy()
+        color_chooser = colorchooser.askcolor(title='select color')
+        win.configure(background=color_chooser[1])
 
+    def music_click():
+        b_save_settings.destroy()
+        lb_color.destroy()
+        height_slider.destroy()
+        width_slider.destroy()
+        b_save_settings.destroy()
+        b_click_here.destroy()
+        lb_height.destroy()
+        lb_width.destroy()
+        lb_click_here.destroy()
 
-        # SETTINGS BUTTONS
-        b_save_settings = Button(win, text='Save Settings', command=save_settings_click)
-        b_save_settings.place(x=310, y=300)
+        def music_save_settings_click():
+            volume_value = int(music_volume.get())
+            volume_value = volume_value / 100
+            mixer.music.set_volume(volume_value)
 
-        b_click_here = Button(win, text='Click Here', command=click_here_click)
-        b_click_here.place(x=300, y=450)
+        # MUSIC BUTTONS
+        b_music_save_settings = Button(win, text='Save Settings', command=music_save_settings_click)
+        b_music_save_settings.place(x=250, y=250)
 
-        b_change_background_color = Button(win, text='Change Background Color', command=change_background_color_click)
-        b_change_background_color.place(x=600, y=150)
+        # MUSIC LABELS
+        lb_music = Label(win, text="Music: ")
+        lb_music.place(x=260, y=100)
 
-        # SETTINGS LABELS
-        lb_height = Label(win, text='HEIGHT')
-        lb_height.place(x=260, y=120)
+        lb_volume = Label(win, text='Music Volume')
+        lb_volume.place(x=250, y=150)
 
-        lb_width = Label(win, text='WIDTH')
-        lb_width.place(x=380, y=120)
+        # MUSIC SLIDERS
+        music_volume = Scale(win, from_=0, to=100, orient=HORIZONTAL)
+        music_volume.place(x=350, y=135)
 
-        lb_color = Label(win, text="BACKGROUND COLOR")
-        lb_color.place(x=285, y=200)
+        # SETTINGS CHECKBOX
+        cb_music = Checkbutton(win, text='ON', command=music_player)
+        cb_music.place(x=350, y=100)
 
-        lb_click_here = Label(win, text="Or insert the window's dimensions, by clicking in the button below")
-        lb_click_here.place(x=300, y=400)
+    # SETTINGS BUTTONS
+    b_save_settings = Button(win, text='Save Settings', command=save_settings_click)
+    b_save_settings.place(x=310, y=300)
 
-        # SLIDERS
-        height_slider = Scale(win, from_=800, to=1920, orient=HORIZONTAL)
-        height_slider.place(x=230, y=150)
+    b_click_here = Button(win, text='Click Here', command=click_here_click)
+    b_click_here.place(x=300, y=450)
 
-        width_slider = Scale(win, from_=600, to=1080, orient=HORIZONTAL)
-        width_slider.place(x=350, y=150)
+    b_change_background_color = Button(win, text='Change Background Color', command=change_background_color_click)
+    b_change_background_color.place(x=250, y=50)
+
+    b_music = Button(win, text='Music', command=music_click)
+    b_music.place(x=100, y=50)
+
+    # SETTINGS LABELS
+    lb_height = Label(win, text='HEIGHT')
+    lb_height.place(x=260, y=120)
+
+    lb_width = Label(win, text='WIDTH')
+    lb_width.place(x=380, y=120)
+
+    lb_color = Label(win, text="BACKGROUND COLOR")
+    lb_color.place(x=285, y=200)
+
+    lb_click_here = Label(win, text="Or insert the window's dimensions, by clicking in the button below")
+    lb_click_here.place(x=300, y=400)
+
+    # SLIDERS
+    height_slider = Scale(win, from_=800, to=1920, orient=HORIZONTAL)
+    height_slider.place(x=230, y=150)
+
+    width_slider = Scale(win, from_=600, to=1080, orient=HORIZONTAL)
+    width_slider.place(x=350, y=150)
 
 
 # General GUI
