@@ -1,0 +1,18 @@
+jobs:
+  - job: "Install_Packages_and_Lint"
+    pool:
+      vmImage: "ubuntu-latest"
+
+    steps:
+      - task: UsePythonVersion@0
+        displayName: "Use python 3.8.3"
+        inputs:
+          versionSpec: "3.8.3"
+
+      - script: |
+          python -m pip install --upgrade pip flake8
+          pip install -r requirements.txt
+        displayName: "Installing dependencies"
+      - script: |
+          python -m flake8
+        displayName: "Check code style with flake8"
