@@ -4,6 +4,7 @@ from pygame import mixer
 
 win = Tk()
 win['background'] = '#283747'
+win.title('All-Hail-Terminal')
 mixer.init()
 music = mixer.music.load('Ransom.mp3')
 
@@ -49,7 +50,7 @@ def start_click():
 
         b_label_2 = Button(win, text='Label 2')
         b_label_2.place(x=150, y=350)
-        
+
         b_label_3 = Button(win, text='Label 3')
         b_label_3.place(x=150, y=400)
 
@@ -63,7 +64,7 @@ def start_click():
     b_buttons = Button(win, text='Buttons', command=buttons_click)
     b_buttons.place(x=50, y=150)
 
-    b_labels = Button(win, text='Labels',command=labels_click)
+    b_labels = Button(win, text='Labels', command=labels_click)
     b_labels.place(x=50, y=250)
 
     b_quit_project = Button(win, text='Quit', command=quit_project_click, width=10)
@@ -74,12 +75,17 @@ def settings_click():
     b_start.destroy()
     b_settings.destroy()
     b_quit.destroy()
+    # SETTINGS WINDOW
+    set_win = Toplevel()
+    set_win.title('SETTINGS')
+    set_win['background'] = '#283747'
 
     def save_settings_click():
         height_value = str(height_slider.get())
         width_value = str(width_slider.get())
         total = height_value + 'x' + width_value
         win.geometry(total)
+        set_win.geometry(total)
 
     def click_here_click():
         b_save_settings.destroy()
@@ -91,18 +97,19 @@ def settings_click():
         def click_here_save_settings_click():
             height_entry_get = str(height_entry.get())
             width_entry_get = str(width_entry.get())
-            win_geometry = height_entry_get + 'x' + width_entry_get
-            win.geometry(win_geometry)
+            geometry = height_entry_get + 'x' + width_entry_get
+            set_win.geometry(geometry)
+            win.geometry(geometry)
 
         # CLICK HERE ENTRIES
-        height_entry = Entry(win)
+        height_entry = Entry(set_win)
         height_entry.place(x=210, y=150)
 
-        width_entry = Entry(win)
+        width_entry = Entry(set_win)
         width_entry.place(x=350, y=150)
 
         # CLICK HERE BUTTONS
-        b_click_here_save_settings = Button(win, text='Save Settings', command=click_here_save_settings_click)
+        b_click_here_save_settings = Button(set_win, text='Save Settings', command=click_here_save_settings_click)
         b_click_here_save_settings.place(x=310, y=250)
 
     def change_background_color_click():
@@ -117,6 +124,7 @@ def settings_click():
         lb_click_here.destroy()
         color_chooser = colorchooser.askcolor(title='select color')
         win.configure(background=color_chooser[1])
+        set_win.configure(background=color_chooser[1])
 
     def music_click():
         b_save_settings.destroy()
@@ -135,59 +143,66 @@ def settings_click():
             mixer.music.set_volume(volume_value)
 
         # MUSIC BUTTONS
-        b_music_save_settings = Button(win, text='Save Settings', command=music_save_settings_click)
+        b_music_save_settings = Button(set_win, text='Save Settings', command=music_save_settings_click)
         b_music_save_settings.place(x=250, y=250)
 
         # MUSIC LABELS
-        lb_music = Label(win, text="Music: ")
+        lb_music = Label(set_win, text="Music: ")
         lb_music.place(x=260, y=100)
 
-        lb_volume = Label(win, text='Music Volume')
+        lb_volume = Label(set_win, text='Music Volume')
         lb_volume.place(x=250, y=150)
 
         # MUSIC SLIDERS
-        music_volume = Scale(win, from_=0, to=100, orient=HORIZONTAL)
+        music_volume = Scale(set_win, from_=0, to=100, orient=HORIZONTAL)
         music_volume.place(x=350, y=135)
 
         # SETTINGS CHECKBOX
-        cb_music = Checkbutton(win, text='ON', command=music_player)
+        cb_music = Checkbutton(set_win, text='ON', command=music_player)
         cb_music.place(x=350, y=100)
+    def quit_settings_click():
+        set_win.destroy()
 
     # SETTINGS BUTTONS
-    b_save_settings = Button(win, text='Save Settings', command=save_settings_click)
+    b_save_settings = Button(set_win, text='Save Settings', command=save_settings_click)
     b_save_settings.place(x=310, y=300)
 
-    b_click_here = Button(win, text='Click Here', command=click_here_click)
+    b_click_here = Button(set_win, text='Click Here', command=click_here_click)
     b_click_here.place(x=300, y=450)
 
-    b_change_background_color = Button(win, text='Change Background Color', command=change_background_color_click)
+    b_change_background_color = Button(set_win, text='Change Background Color', command=change_background_color_click)
     b_change_background_color.place(x=250, y=50)
 
-    b_music = Button(win, text='Music', command=music_click)
+    b_music = Button(set_win, text='Music', command=music_click)
     b_music.place(x=100, y=50)
 
-    b_back = Button(win, text='Back')
-    b_back.place(x=500, y=500)
+    b_quit_settings = Button(set_win, text='Quit Settings', command=quit_settings_click)
+    b_quit_settings.place(x=700, y=550)
 
     # SETTINGS LABELS
-    lb_height = Label(win, text='HEIGHT')
+    lb_change_window = Label(win, text='CHECK NEW WINDOW!')
+    lb_change_window.place(x=400, y=250)
+
+    lb_height = Label(set_win, text='HEIGHT')
     lb_height.place(x=260, y=120)
 
-    lb_width = Label(win, text='WIDTH')
+    lb_width = Label(set_win, text='WIDTH')
     lb_width.place(x=380, y=120)
 
-    lb_color = Label(win, text="BACKGROUND COLOR")
+    lb_color = Label(set_win, text="BACKGROUND COLOR")
     lb_color.place(x=285, y=200)
 
-    lb_click_here = Label(win, text="Or insert the window's dimensions, by clicking in the button below")
+    lb_click_here = Label(set_win, text="Or insert the window's dimensions, by clicking in the button below")
     lb_click_here.place(x=300, y=400)
 
     # SLIDERS
-    height_slider = Scale(win, from_=800, to=1920, orient=HORIZONTAL)
+    height_slider = Scale(set_win, from_=800, to=1920, orient=HORIZONTAL)
     height_slider.place(x=230, y=150)
 
-    width_slider = Scale(win, from_=600, to=1080, orient=HORIZONTAL)
+    width_slider = Scale(set_win, from_=600, to=1080, orient=HORIZONTAL)
     width_slider.place(x=350, y=150)
+    set_win.geometry('800x600')
+    set_win.mainloop()
 
 
 # General GUI
